@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register User</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+        }
+        form {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+        label, input, textarea {
+          display: block;
+          margin-bottom: 10px;
+        }
+        input[type="submit"] {
+          background-color: #3200fa;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+        }
+        input[type="submit"]:hover {
+          background-color: #45a049;
+        }
+    </style>
+    <script>
+        $("form").submit(function(event) {
+        event.preventDefault();
+        function myalert() {
+            alert("The User has been succesfully registered");
+        }})
+    </script>
+</head>
+<body>
+    <form action="/" method="post">
+        <label for="nume">Nume:</label>
+        <input type="text" name="nume" id="nume" required><br>
+
+        <label for="prenume">Prenume:</label>
+        <input type="text" name="prenume" id="prenume" required><br>
+
+        <label for="companie">Companie:</label>
+        <input type="text" name="companie" id="companie" required><br>
+
+        <label for="id_manager">ID Manager:</label>
+        <input type="text" name="id_manager" id="id_manager" required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

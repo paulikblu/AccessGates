@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label, input, textarea {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="submit"] {
+      background-color: #3200fa;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("form").submit(function(event) {
+        event.preventDefault();
+        alert("You have succesfully registered")
+        var formData = {
+          nume: $("#nume").val(),
+          prenume: $("prenume").val(),
+          companie: $("#companie").val(),
+          idmanager: $("#idmanager").val()
+        };
+
+
+        $.ajax({
+          type: "POST",
+          url: "/person",
+          data: JSON.stringify(formData),
+          contentType: "application/json",
+   
+
+          success: function(response) {
+            console.log(response);
+            // Process the response here
+          },
+          error: function(error) {
+            console.log(error);
+            // Handle errors here
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <form>
+    <label for="nume">Nume:</label>
+    <input type="text" id="nume" name="nume" required>
+
+    <label for="prenume">Prenume:</label>
+    <input type="prenume" id="prenume" name="prenume" required>
+
+    <label for="companie">Companie:</label>
+    <textarea id="companie" name="companie" rows="4" required></textarea>
+
+    <label for="IdManager">ID Manager:</label>
+    <input type="IdManager" id="IdManager" name="IdManager" required>
+
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
