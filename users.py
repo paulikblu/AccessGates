@@ -1,4 +1,5 @@
 import mysql.connector
+import requests
 
 connect=mysql.connector.connect(
         host="localhost",
@@ -20,5 +21,4 @@ class User():
             connect.commit()
             return 'User registered successfully!'
 
-       
-# get_person()
+

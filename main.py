@@ -1,12 +1,5 @@
-import datetime
-import csv
 import mysql.connector
-import shutil
-import os
-import requests
-import json
 import schedule
-import move
 import subprocess
 import threading
 from files import Fisier,Txt,Csv,checkingNewFileS
@@ -25,6 +18,8 @@ intrari="intrari"
 backup="backup_intrari"
 
 def main():
+    schedule.every().day.at("20:00").do(checking_hours)
+    schedule.run_pending()
     while True:
         poarta1=Txt("Poarta1.txt")
         poarta2=Csv("Poarta2.csv")
@@ -32,24 +27,17 @@ def main():
         poarta2.citire_fisier()
         checkingNewFileS()
         time.sleep(5)
-        schedule.every().day.at("20:00").do(checking_hours)
-        schedule.run_pending()
 
-main()
+# main()
 
-# def server():
-#     subprocess.run(["python","server.py"],check=True)
+def server():
+    subprocess.run(["python","server.py"],check=True)
 
-# t1 = threading.Thread(target=main)
-# t2 = threading.Thread(target=server)
+t1 = threading.Thread(target=main)
+t2 = threading.Thread(target=server)
 
-# t1.start()
-# t2.start()
+t1.start()
+t2.start()
 
-# t1.join()
-# t2.join()
-
-
-
-
-
+t1.join()
+t2.join()

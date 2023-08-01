@@ -12,6 +12,18 @@ connect=mysql.connector.connect(
     )
 cursor=connect.cursor()
 
+@app.route('/inregistrare', methods=['POST'])
+def inregistrare_utilizator():
+    data = request.get_json()
+    nume = data['nume']
+    prenume = data['prenume']
+    companie = data['companie']
+    id_manager = data['id_manager']
+    user=User(nume,prenume,companie,id_manager)
+    user.get_user()
+    connect.commit()
+    return "Utilizator înregistrat cu succes!"
+
 @app.route('/',methods=["GET","POST"])
 def get_user():
     if request.method=="POST":
@@ -41,7 +53,6 @@ def getPerson():
     cursor.execute(querry)
     connect.commit()
     return "Datele au fost inserate"
-
 
 if __name__ == '__main__':
     app.run(debug=True)
