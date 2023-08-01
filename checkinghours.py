@@ -1,7 +1,5 @@
-import time
-from datetime import datetime, timedelta, date
+from datetime import datetime, date
 import mysql.connector
-import pandas as pd
 from email.message import EmailMessage
 import ssl
 import smtplib
@@ -43,47 +41,54 @@ def difference_time(start, end):
     return int(hours)
 
 def checking_hours():
-    data=date.today()
-    employees={}
+    data = date.today()
+    employees = {}
     cursor.execute(f"SELECT * FROM ACCES_POINT WHERE Data='{str(data)}'")
     # cursor.execute(f"SELECT * FROM ACCES_POINT")
-    angajati=cursor.fetchall()
+    angajati = cursor.fetchall()
     for angajat in angajati:
-        idAngajat=angajat[0]
-        ore_lucrate=angajat[3]
-        way=angajat[4]
+        idAngajat = angajat[0]
+        ore_lucrate = angajat[3]
+        way = angajat[4]
         if idAngajat not in employees:
-            employees[idAngajat]= {"intrare":[],"iesire":[]}
+            employees[idAngajat] = {"intrare": [], "iesire": []}
         if way == 'in':
             employees[idAngajat]['intrare'].append(ore_lucrate[:8])
         elif way == 'out':
             employees[idAngajat]['iesire'].append(ore_lucrate[:8])
-    numar_ore=[]
+            
+    numar_ore = []
     for idAngajat, time_dict in employees.items():
         intrari = time_dict['intrare']
         iesiri = time_dict['iesire']
         total_ore_lucrate = 0
-        for i in range(min(len(intrari), len(iesiri))):
-            intrare = intrari[i]
-            iesire = iesiri[i]
+        
+        # Calculate total working hours for each entry-exit pair
+        for intrare, iesire in zip(intrari, iesiri):
             ore_lucrate = difference_time(intrare, iesire)
             total_ore_lucrate += ore_lucrate
+        
         angajat_data = {"IDangajat": idAngajat, "nrOreLucrate": total_ore_lucrate}
         numar_ore.append(angajat_data)
-    numar_ore_sub=[]
+        
+    numar_ore_sub = []
     for element in numar_ore:
-        if element["nrOreLucrate"]<8:
+        if element["nrOreLucrate"] < 8:
             numar_ore_sub.append(element)
-    if len(numar_ore_sub)>0:
-        text=""
+            
+    if len(numar_ore_sub) > 0:
+        text = ""
         for el in numar_ore_sub:
-            idan=el['IDangajat']
-            ore=el['nrOreLucrate']
-            text+=f"Atenție! Angajatul cu ID-ul {idan} a lucrat {ore} ore în data de {data}\n"
+            idan = el['IDangajat']
+            ore = el['nrOreLucrate']
+            text += f"Atenție! Angajatul cu ID-ul {idan} a lucrat {ore} ore în data de {data}\n"
+    else:
+        text = f"Toți angajații au lucrat cel puțin 8 ore în data de {data}\n"
+        
     print(text)
     sending_email(text)   
     
        
-# checking_hours()
+checking_hours()
 
 

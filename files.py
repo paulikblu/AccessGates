@@ -15,8 +15,6 @@ cursor=connect.cursor()
 intrari='intrari/'
 backup='backup_intrari/'
 
-
-
 class Fisier():
     def __init__(self,numeFisier):
         self.numeFisier = numeFisier
