@@ -89,6 +89,6 @@ def checking_hours():
     sending_email(text)   
     
        
-checking_hours()
+# checking_hours()
 
 

@@ -12,14 +12,14 @@ connect=mysql.connector.connect(
     )
 cursor=connect.cursor()
 
-@app.route('/inregistrare', methods=['POST'])
+@app.route('/inregistrare', methods=['GET','POST'])
 def inregistrare_utilizator():
     data = request.get_json()
     nume = data['nume']
     prenume = data['prenume']
     companie = data['companie']
-    id_manager = data['id_manager']
-    user=User(nume,prenume,companie,id_manager)
+    idManager = data['idManager']
+    user=User(nume,prenume,companie,idManager)
     user.get_user()
     connect.commit()
     return "Utilizator înregistrat cu succes!"

@@ -6,49 +6,55 @@ import colorlog,logging
 import shutil
 
 #verificare insert user in baza de date
-def test_1(id_manager,URL,cale,nume_tabel):
-    users=[["Badea","Mihai","IT Shool",id_manager],
-           ["Muntean","Paul","IT School",id_manager],
-           ["Olteanu","Leontin","IT School",id_manager],
-           ["Angiu","Natalia","Google",id_manager]]
+def test_1(id_manager, URL, cale, nume_tabel):
+    users = [
+        ["Badea", "Mihai", "IT Shool", id_manager],
+        ["Muntean", "Paul", "IT School", id_manager],
+        ["Olteanu", "Leontin", "IT School", id_manager],
+        ["Angiu", "Natalia", "Google", id_manager]
+    ]
     for user in users:
-        jsonData={
-            "nume":user[0],
-            "prenume":user[1],
-            "companie":user[2],
-            "idManager":id_manager
+        jsonData = {
+            "nume": user[0],
+            "prenume": user[1],
+            "companie": user[2],
+            "idManager": id_manager
         }
-        headers={
-        'Content-type':'application/json', 
-        'Accept':'application/json'
+        headers = {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
         }
-        # session=requests.session()
-        r=requests.post(URL+cale,data=jsonData,headers=headers)
+        r = requests.post(URL + cale, json=jsonData, headers=headers)
         print(r.status_code)
 
-    connect=mysql.connector.connect(host="localhost",user="root",password="Pri.Pri.69",database="proiectf")
-    cursor=connect.cursor()
-
+    connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Pri.Pri.69",
+        database="proiectf"
+    )
+    cursor = connect.cursor()
 
     cursor.execute(f"SELECT * from {nume_tabel}")
-    results=cursor.fetchall()
+    results = cursor.fetchall()
 
     for row in users:
-        found=False
-        contor=0
-        while not found and contor<len(results):
-            flag=True
+        found = False
+        contor = 0
+        while not found and contor < len(results):
+            flag = True
             for i in range(len(row)):
-                if row[i]!=results[contor][i+1]:
-                    flag=False
-            if flag==True:
-                found=True
+                if row[i] != results[contor][i + 1]:
+                    flag = False
+            if flag:
+                found = True
             else:
-                contor+=1
-        if found==False:
-            return"Test 1 failed..."
-        else:
-            return"Test 1 passed.."
+                contor += 1
+        if not found:
+            return "Test 1 failed..."
+    
+    return "Test 1 passed.."
+
     cursor.close()
     connect.close()
 
