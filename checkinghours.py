@@ -62,8 +62,6 @@ def checking_hours():
         intrari = time_dict['intrare']
         iesiri = time_dict['iesire']
         total_ore_lucrate = 0
-        
-        # Calculate total working hours for each entry-exit pair
         for intrare, iesire in zip(intrari, iesiri):
             ore_lucrate = difference_time(intrare, iesire)
             total_ore_lucrate += ore_lucrate

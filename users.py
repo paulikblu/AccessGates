@@ -1,5 +1,4 @@
 import mysql.connector
-import requests
 
 connect=mysql.connector.connect(
         host="localhost",
