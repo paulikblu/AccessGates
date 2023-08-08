@@ -58,7 +58,7 @@ class Txt(Fisier):
         super().__init__(numeFisier)
     def citire_fisier(self):
         """
-        Reads the content of the TXT file and inserts the extracted data in the database.
+        Reads the content of the TXT file and inserts the extracted data into the database.
         
         """
         try:
@@ -106,7 +106,7 @@ class Csv(Fisier):
         super().__init__(numeFisier)
     def citire_fisier(self):
         """
-        Reads the content of the CSV file and inserts the extracted data in the database.
+        Reads the content of the CSV file and inserts the extracted data into the database.
         """
         try:
             with open(intrari+self.numeFisier,"r") as file:
@@ -135,7 +135,7 @@ class Csv(Fisier):
         destinatia=os.path.join(backup,newfile)
         shutil.move(sursa,destinatia)
 
-# Funcția pentru verificarea și mutarea fișierelor noi
+# Function for checking and moving new files 
 def checkingNewFileS():
     """
     Checks if there are new files in the initial folder and moves them in the backup folder.
