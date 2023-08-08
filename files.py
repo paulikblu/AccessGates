@@ -45,7 +45,7 @@ class Fisier():
 # Defining the class for the TXT files   
 class Txt(Fisier):
     """
-    The class for reading the TXT file.
+    The class for reading TXT files.
     """
     timp=date.today()
     def __init__(self,numeFisier):
@@ -92,7 +92,7 @@ class Txt(Fisier):
 # Defining the class for CSV files.
 class Csv(Fisier):
     """
-    The class for the CSV file.
+    The class for reading CSV files.
    
     """
     timp=date.today()
