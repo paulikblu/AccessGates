@@ -6,8 +6,14 @@ import time
 from checkinghours import checking_hours
 
 def main():
+    """
+    Main function for scheduling tasks and file processing.
+    """
+    # Schedule the 'checking_hours' function to run daily at 20:00
     schedule.every().day.at("20:00").do(checking_hours)
     schedule.run_pending()
+
+    # Execute tasks
     while True:
         poarta1=Txt("Poarta1.txt")
         poarta2=Csv("Poarta2.csv")
@@ -16,9 +22,10 @@ def main():
         checkingNewFileS()
         time.sleep(5)
 
-# main()
-
 def server():
+    """
+    Starts the server using a subprocess.
+    """
     subprocess.run(["python","server.py"],check=True)
 
 t1 = threading.Thread(target=main)
