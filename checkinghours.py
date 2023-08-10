@@ -60,6 +60,7 @@ def difference_time(start, end):
     hours = sec / (60 * 60)
     return int(hours)
 
+
 # Function for checking the working hours of the employees and sending the Manager an email. 
 def checking_hours():
     """
@@ -74,7 +75,7 @@ def checking_hours():
     
     data = date.today()
     employees = {}
-        
+    
     #Extracting data from the database (from the current day) and sorting the employees
     cursor.execute(f"SELECT * FROM ACCES_POINT WHERE Data='{str(data)}'")
     angajati = cursor.fetchall()
