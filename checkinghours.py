@@ -13,7 +13,7 @@ connect=mysql.connector.connect(
     )
 cursor=connect.cursor()
 
-# Funcția pentru trimiterea de emailuri
+# Function for sending mails
 def sending_email(text):
     """
     Sends an email with the specified text content.
@@ -40,7 +40,7 @@ def sending_email(text):
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
 
-# Funcția pentru calcularea diferenței de timp în ore
+# Function for calculating the difference between two given time values
 def difference_time(start, end):
     """
     Calculates the time difference between two time values.
@@ -60,7 +60,7 @@ def difference_time(start, end):
     hours = sec / (60 * 60)
     return int(hours)
 
-# Funcția pentru verificarea orelor lucrate ale angajaților și trimiterea unui mail managerului
+# Function for checking the working hours of the employees and sending the Manager an email.
 def checking_hours():
     """
     Checks the hours worked by employees and sends warnings via email.
@@ -71,19 +71,17 @@ def checking_hours():
     Returns:
         None
     """
+
     data = date.today()
     employees = {}
-     # Interogarea bazei de date pentru a obține înregistrările pentru data curentă
+    
+    #Extracting data from the database (from the current day) and sorting the employees
     cursor.execute(f"SELECT * FROM ACCES_POINT WHERE Data='{str(data)}'")
-
-    # Parcurgerea fiecărei înregistrări și procesarea datelor
     angajati = cursor.fetchall()
     for angajat in angajati:
         idAngajat = angajat[0]
         ore_lucrate = angajat[3]
         way = angajat[4]
-
-        # Adăugarea înregistrărilor în dicționarul employees
         if idAngajat not in employees:
             employees[idAngajat] = {"intrare": [], "iesire": []}
         if way == 'in':
@@ -91,7 +89,7 @@ def checking_hours():
         elif way == 'out':
             employees[idAngajat]['iesire'].append(ore_lucrate[:8])
 
-    # Calcularea totalului orelor lucrate de fiecare angajat și adăugarea lor într-o listă        
+    # Calculating how many hours each employee had worked on the current day        
     numar_ore = []
     for idAngajat, time_dict in employees.items():
         intrari = time_dict['intrare']
@@ -104,7 +102,7 @@ def checking_hours():
         angajat_data = {"IDangajat": idAngajat, "nrOreLucrate": total_ore_lucrate}
         numar_ore.append(angajat_data)
 
-    # Creearea unei liste cu angajații care au lucrat mai puțin de 8 ore și trimiterea emailului la manager    
+    # Creating a list with every employee that worked under 8 hours and sending an email to the Manager    
     numar_ore_sub = []
     for element in numar_ore:
         if element["nrOreLucrate"] < 8:
