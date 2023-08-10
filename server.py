@@ -81,9 +81,13 @@ def getPerson():
     sens=datas['sens']
     idPersoana=datas['idPersoana']
     idPoarta=datas['idPoarta']
+    data=data.strip("Z")
+    data=data.split("T")
+    ziua=data[0]
+    ora=data[1]
 
     # Insert access data into the database
-    querry=f"INSERT INTO gate3 values(null,'{data}','{sens}','{idPersoana}','{idPoarta}')"
+    querry=f"INSERT INTO acces_point values('{idPersoana}','{idPoarta}','{ziua}','{ora}','{sens}')"
     print(querry)
     cursor.execute(querry)
     connect.commit()
