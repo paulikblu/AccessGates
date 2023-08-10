@@ -135,7 +135,8 @@ class Csv(Fisier):
         destinatia=os.path.join(backup,newfile)
         shutil.move(sursa,destinatia)
 
-# Function for checking and moving new files
+
+# Function for checking and moving new files 
 def checkingNewFileS():
     """
     Checks if there are new files in the initial folder and moves them in the backup folder.

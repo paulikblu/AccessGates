@@ -60,7 +60,8 @@ def difference_time(start, end):
     hours = sec / (60 * 60)
     return int(hours)
 
-# Function for checking the working hours of the employees and sending the Manager an email.
+
+# Function for checking the working hours of the employees and sending the Manager an email. 
 def checking_hours():
     """
     Checks the hours worked by employees and sends warnings via email.
@@ -71,7 +72,7 @@ def checking_hours():
     Returns:
         None
     """
-
+    
     data = date.today()
     employees = {}
     
@@ -120,7 +121,6 @@ def checking_hours():
     print(text)
     sending_email(text)   
     
-       
-# checking_hours()
+
 
 
